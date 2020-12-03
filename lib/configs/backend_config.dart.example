@@ -1,0 +1,13 @@
+class BackendConfig {
+  static const String BASE_URL = "http://dev.sugamobile.com:26145";
+
+  static const int CONNECT_TIMEOUT = 30000;
+  static const int RECEIVE_TIMEOUT = 30000;
+
+  static const String OAUTH2_CLIENT_ID = "1";
+  static const String OAUTH2_CLIENT_SECRET = "bkpHDIZ11kILGkHQMTsDMG6ugDR3nCkcBeOtMCS5";
+
+  static const String SOCKET_IO_URI = "http://dev.sugamobile.com:26149";
+  static const int SOCKET_IO_CONNECT_TIMEOUT = 5000;
+  static const int SOCKET_IO_EMIT_WITH_ACK_TIMEOUT = 10000;
+}

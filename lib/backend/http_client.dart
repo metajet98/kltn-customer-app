@@ -1,0 +1,62 @@
+import 'dart:io';
+
+import 'package:customer_app/backend/auth_manager.dart';
+import 'package:customer_app/backend/http_error.dart';
+import 'package:customer_app/configs/app_config.dart';
+import 'package:customer_app/configs/backend_config.dart';
+import 'package:customer_app/event_bus.dart';
+import 'package:customer_app/events/http_unauthorized_response_event.dart';
+import 'package:customer_app/locator.dart';
+import 'package:customer_app/logger.dart';
+import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
+import 'package:logger/logger.dart';
+
+@lazySingleton
+class HttpClient {
+  Dio dio = Dio();
+
+  HttpClient() {
+    dio.options = BaseOptions(
+      baseUrl: BackendConfig.BASE_URL,
+      connectTimeout: BackendConfig.CONNECT_TIMEOUT,
+      receiveTimeout: BackendConfig.RECEIVE_TIMEOUT,
+    );
+
+    if (AppConfig.DEBUG) {
+      final Logger _logger = Logger(
+        level: AppConfig.LOG_LEVEL,
+        printer: SimplePrinter(),
+      );
+      if (AppConfig.LOG_LEVEL == Level.verbose) {
+        dio.interceptors.add(LogInterceptor(logPrint: _logger.v, requestBody: true, responseBody: true));
+      } else {
+        dio.interceptors.add(LogInterceptor(logPrint: _logger.d));
+      }
+    }
+
+    dio.interceptors.add(InterceptorsWrapper(onRequest: _onRequest, onError: _onError));
+  }
+
+  Future<RequestOptions> _onRequest(RequestOptions option) async {
+    final String accessToken = await locator<AuthManager>().getAccessToken();
+    if (accessToken != null) {
+      option.headers["Authorization"] = "Bearer $accessToken";
+    }
+
+    option.headers["Accept"] = "application/json";
+
+    return option;
+  }
+
+  HttpError _onError(DioError e) {
+    final HttpError httpError = HttpError(e);
+
+    if (httpError.response?.statusCode == HttpStatus.unauthorized) {
+      logger.w("Http Unauthorized Response");
+      eventBus.fire(HttpUnauthorizedResponseEvent(httpError));
+    }
+
+    return httpError;
+  }
+}
