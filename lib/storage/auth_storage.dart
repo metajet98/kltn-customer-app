@@ -2,21 +2,36 @@ import 'dart:convert';
 
 import 'package:customer_app/storage/storage.dart';
 import 'package:injectable/injectable.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @lazySingleton
 class AuthStorage extends Storage<AuthToken> {
+  final String KEY_ACCESS_TOKEN = "access_token";
+  final String KEY_REFRESH_TOKEN = "refresh_token";
+  final String KEY_EXPIRED_IN = "expired_in";
   AuthStorage(SharedPreferences prefs) : super(prefs, 'auth_token');
 
   @override
   AuthToken get({AuthToken defaultValue}) {
-    final String json = prefs.getString(key);
-    return json != null ? AuthToken.fromJson(json) : defaultValue;
+    final String accessToken = prefs.getString(KEY_ACCESS_TOKEN);
+    final String refreshToken = prefs.getString(KEY_REFRESH_TOKEN);
+    final int expiredIn = prefs.getInt(KEY_EXPIRED_IN) ?? 0;
+    return AuthToken(accessToken, refreshToken, DateTime.fromMillisecondsSinceEpoch(expiredIn*1000));
   }
 
   @override
   void set(AuthToken value) {
-    prefs.setString(key, value.toJson());
+    prefs.setString(KEY_ACCESS_TOKEN, value.accessToken);
+    prefs.setString(KEY_REFRESH_TOKEN, value.refreshToken);
+    prefs.setInt(KEY_EXPIRED_IN, value.expiredIn.millisecondsSinceEpoch~/1000);
+  }
+
+  @override
+  void remove() {
+    prefs.remove(KEY_EXPIRED_IN);
+    prefs.remove(KEY_REFRESH_TOKEN);
+    prefs.remove(KEY_ACCESS_TOKEN);
   }
 }
 
@@ -27,11 +42,5 @@ class AuthToken {
 
   AuthToken(this.accessToken, this.refreshToken, this.expiredIn);
 
-  String toJson() => jsonEncode(this);
-  static AuthToken fromJson(String json) {
-    final raw = jsonDecode(json) as Map<String, dynamic>;
-    return AuthToken(raw["accessToken"], raw["refreshToken"], raw["expiredIn"]);
-  }
-
-  bool get isExpired => expiredIn?.isAfter(DateTime.now()) == true;
+  bool get isExpired => expiredIn?.isBefore(DateTime.now()) == true;
 }

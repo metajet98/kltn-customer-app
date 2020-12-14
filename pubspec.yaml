@@ -11,18 +11,21 @@ dependencies:
     sdk: flutter
 
   # Core
-  easy_localization: ^2.3.3
   permission_handler: ^5.0.1+1
   injectable: ^1.0.4
   get_it: ^4.0.4
   get: ^3.17.1
   event_bus: ^1.1.1
   synchronized: ^2.2.0+2
+  shared_preferences: ^0.5.12+4
 
   # UI
   google_fonts: ^1.1.1
   flutter_easyloading: ^2.0.1
   fluttertoast: ^7.1.1
+  flutter_icons: ^1.1.0
+  google_maps_flutter: ^1.0.6
+  dots_indicator: ^1.2.0
 
   # Restful
   dio: ^3.0.7

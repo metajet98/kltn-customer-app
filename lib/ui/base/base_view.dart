@@ -1,0 +1,40 @@
+import 'package:customer_app/locator.dart';
+import 'package:customer_app/ui/base/base_view_model.dart';
+import 'package:flutter/material.dart';
+
+abstract class BaseView<T extends BaseViewModel> extends StatefulWidget {
+  final T viewModel = locator<T>();
+
+  void onInit() {
+    viewModel.onInit();
+  }
+
+  void onDispose() {
+    viewModel.onDispose();
+  }
+
+  Widget build(BuildContext context);
+
+  @override
+  BaseViewState<T> createState() => BaseViewState<T>();
+}
+
+class BaseViewState<T extends BaseViewModel> extends State<BaseView<T>> {
+  @override
+  void initState() {
+    widget.viewModel.view = widget;
+    widget.onInit();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget.onDispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.build(context);
+  }
+}

@@ -8,7 +8,7 @@ class HttpError extends DioError {
   @override
   String get message {
     if (error is SocketException) {
-      return "network_error_message";
+      return "Không thể kết nối đến máy chủ, vui lòng kiểm tra lại mạng!";
     }
 
     if (response?.data is Map) {
