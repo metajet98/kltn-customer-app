@@ -35,7 +35,7 @@ class HttpClient {
       }
     }
 
-    dio.interceptors.add(InterceptorsWrapper(onRequest: _onRequest, onError: _onError));
+    dio.interceptors.add(InterceptorsWrapper(onRequest: _onRequest, onError: _onError, onResponse: _onResponse));
   }
 
   Future<RequestOptions> _onRequest(RequestOptions option) async {
@@ -47,6 +47,17 @@ class HttpClient {
     option.headers["Accept"] = "application/json";
 
     return option;
+  }
+
+  dynamic _onResponse(Response response) {
+    if(response.data is Map) {
+      final responseData = response.data as Map;
+      final isSuccess = responseData["isSuccess"] as bool;
+      if(isSuccess == false) {
+        throw DioError(response: response);
+      }
+    }
+    return response.data;
   }
 
   HttpError _onError(DioError e) {

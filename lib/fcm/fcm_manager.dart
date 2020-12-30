@@ -3,9 +3,12 @@ import 'dart:isolate';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:customer_app/backend/services/fcm_service.dart';
 import 'package:customer_app/fcm/fcm_message_handler_routes.dart';
 import 'package:customer_app/fcm/fcm_payload.dart';
+import 'package:customer_app/locator.dart';
 import 'package:customer_app/logger.dart';
+import 'package:customer_app/storage/fcm_token_storage.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
@@ -63,6 +66,7 @@ class FcmManager {
   }
 
   void _pushNotification(FcmPayload payload) {
+    logger.d("On Notification - Payload ${payload.toJson()}");
     final bigTextStyleInformation = BigTextStyleInformation(payload.body);
     final androidPlatformChannelSpecifics = AndroidNotificationDetails('global_channel', 'Global notifications', 'All of notifications',
         importance: Importance.max,
@@ -77,22 +81,22 @@ class FcmManager {
 
   void _onMessage(FcmPayload payload) {
     logger.d("On Message - Payload ${payload.toJson()}");
-    fcmMessageHandlerRoutes[payload.type]?.handle(payload);
+    fcmMessageHandlerRoutes[payload.activity]?.handle(payload);
   }
 
   Future<void> registerToken() async {
-    // if (locator<FcmTokenStorage>().get() != null) {
-    //   return;
-    // }
-    //
-    // final token = await _firebaseMessaging.getToken();
-    // await locator<FcmService>().register(token: token, platform: Platform.operatingSystem);
-    // locator<FcmTokenStorage>().set(token);
+    if (locator<FcmTokenStorage>().get() != null) {
+      return;
+    }
+
+    final token = await _firebaseMessaging.getToken();
+    await locator<FcmService>().register(token: token, platform: Platform.operatingSystem);
+    locator<FcmTokenStorage>().set(token);
   }
 
   Future<void> unregisterToken() async {
-    // final token = await _firebaseMessaging.getToken();
-    // await locator<FcmService>().unregister(token: token);
-    // locator<FcmTokenStorage>().remove();
+    final token = await _firebaseMessaging.getToken();
+    await locator<FcmService>().unregister(token: token);
+    locator<FcmTokenStorage>().remove();
   }
 }

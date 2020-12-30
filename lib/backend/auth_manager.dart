@@ -1,3 +1,4 @@
+import 'package:customer_app/backend/http_error.dart';
 import 'package:customer_app/configs/backend_config.dart';
 import 'package:customer_app/fcm/fcm_manager.dart';
 import 'package:customer_app/locator.dart';
@@ -15,23 +16,27 @@ class AuthManager {
   final _dio = Dio();
 
   Future<AuthToken> login(String phoneNumber, String password) async {
-    logger.d("Logging in - phone $phoneNumber, password $password");
+    try {
+      logger.d("Logging in - phone $phoneNumber, password $password");
 
-    final response = await _dio.post("${BackendConfig.BASE_URL}/api/login", data: {
-      "PhoneNumber": phoneNumber,
-      "Password": password
-    });
-    final data = response.data as Map<String, dynamic>;
-    final accessToken = data["accessToken"] as String;
-    final refreshToken = data["refreshToken"] as String;
-    final expiredIn = DateTime.fromMillisecondsSinceEpoch((data["expiredIn"] as int)*1000);
-    final authToken = AuthToken(accessToken, refreshToken, expiredIn);
-    locator<AuthStorage>().set(authToken);
-    await locator<FcmManager>().registerToken();
+      final response = await _dio.post("${BackendConfig.BASE_URL}/api/login", data: {
+        "PhoneNumber": phoneNumber,
+        "Password": password
+      });
+      final data = response.data as Map<String, dynamic>;
+      final accessToken = data["accessToken"] as String;
+      final refreshToken = data["refreshToken"] as String;
+      final expiredIn = DateTime.fromMillisecondsSinceEpoch((data["expiredIn"] as int)*1000);
+      final authToken = AuthToken(accessToken, refreshToken, expiredIn);
+      locator<AuthStorage>().set(authToken);
+      await locator<FcmManager>().registerToken();
 
-    logger.d("Logged in - credentials $authToken");
+      logger.d("Logged in - credentials $authToken");
 
-    return authToken;
+      return authToken;
+    } on DioError catch (e) {
+      throw HttpError(e);
+    }
   }
 
   Future<AuthToken> _refresh({AuthToken authToken}) async {
@@ -77,7 +82,7 @@ class AuthManager {
   Future<String> getAccessToken() async {
     AuthToken token = locator<AuthStorage>().get();
 
-    if (token == null) {
+    if (token?.accessToken == null) {
       return null;
     }
 

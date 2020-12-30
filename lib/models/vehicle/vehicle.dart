@@ -9,6 +9,9 @@ class Vehicle {
   @JsonKey(name: "id")
   int id;
 
+  @JsonKey(name: "name")
+  String name;
+
   @JsonKey(name: "user")
   User user;
 
@@ -33,8 +36,17 @@ class Vehicle {
   @JsonKey(name: "color")
   String color;
 
-  Vehicle(this.id, this.user, this.userId, this.vehicleGroup, this.vehicleGroupId, this.chassisNumber,
-      this.engineNumber, this.plateNumber, this.color);
+  Vehicle(
+      {this.id,
+      this.user,
+      this.userId,
+      this.vehicleGroup,
+      this.vehicleGroupId,
+      this.chassisNumber,
+      this.engineNumber,
+      this.plateNumber,
+      this.color,
+      this.name});
 
   factory Vehicle.fromJson(Map<String, dynamic> json) => _$VehicleFromJson(json);
 

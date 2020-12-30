@@ -35,4 +35,17 @@ class CustomerCareScreen extends BaseView<CustomerCareScreenModel> {
     );
   }
 
+  @override
+  BaseViewState<CustomerCareScreenModel> createState() => CustomerCareScreenState();
+}
+
+class CustomerCareScreenState extends BaseViewState<CustomerCareScreenModel> with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return widget.build(context);
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }

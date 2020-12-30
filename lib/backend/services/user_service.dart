@@ -17,4 +17,7 @@ abstract class UserService {
 
   @GET("/self")
   Future<ObjectResponse<User>> self();
+
+  @POST("")
+  Future<void> createAccount({@Field("PhoneNumber") String phoneNumber, @Field("Password") String password, @Field("FullName") String fullName});
 }

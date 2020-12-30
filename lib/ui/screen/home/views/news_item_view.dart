@@ -4,7 +4,9 @@ import 'package:flutter/widgets.dart';
 class NewsItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(10),
       child: Column(
         children: [
           Expanded(
@@ -15,7 +17,7 @@ class NewsItemView extends StatelessWidget {
               ),
             ),
           ),
-          Text("aaaaaaaaaaaaaaaasadadasdassad", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),),
+          Padding(padding: EdgeInsets.all(4), child: Text("aaaaaaaaaaaaaaaasadadasdassad", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),)),
         ],
       ),
     );

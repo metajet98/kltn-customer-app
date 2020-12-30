@@ -100,7 +100,7 @@ class EasyListViewState extends State<EasyListView> {
 
   Widget _itemBuilder(BuildContext context,int index) {
     final headerCount = _headerCount();
-    const placeHolderCount = 1;
+    final placeHolderCount = 1;
     final totalItemCount = _dataItemCount() + headerCount + _footerCount() + placeHolderCount;
     switch (_itemType(index, totalItemCount)) {
       case ItemType.header:
@@ -128,7 +128,7 @@ class EasyListViewState extends State<EasyListView> {
 
   Widget _buildList() {
     final headerCount = _headerCount();
-    const placeHolderCount = 1;
+    final placeHolderCount = 1;
     final totalItemCount = _dataItemCount() + headerCount + _footerCount() + placeHolderCount;
     final listView =  widget.isSliverMode
         ? CustomScrollView(
@@ -198,8 +198,13 @@ class EasyListViewState extends State<EasyListView> {
 
   int _footerCount() => (_hasFooter() || widget.loadMore) ? 1 : 0;
 
-  int _dataItemCount() =>
-      _hasDivider() ? widget.itemCount * 2 - 1 : widget.itemCount;
+  int _dataItemCount() {
+    if(widget.itemCount == 0) {
+      return 0;
+    } else {
+      return _hasDivider() ? widget.itemCount * 2 - 1 : widget.itemCount;
+    }
+  }
 
   bool _hasDivider() => widget.dividerBuilder != null;
 

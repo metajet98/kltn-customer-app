@@ -37,62 +37,99 @@ class AddBikeBottomSheet extends BaseView<AddBikeBottomSheetModel> {
                           hintText: "Nhập tên xe",
                           hintStyle: TextStyle(color: Colors.grey, fontSize: 14)),
                     ),
-                    SizedBox(height: 16),
-                    Obx(() => DropdownButtonFormField<int>(
-                          decoration: const InputDecoration(
-                            labelText: "Chọn hãng xe",
-                            border: const OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(const Radius.circular(20)),
-                              gapPadding: 0,
+                    SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Obx(() => Expanded(
+                          child: DropdownButtonFormField<int>(
+                            decoration: const InputDecoration(
+                              labelText: "Chọn hãng xe",
+                              border: const OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(const Radius.circular(20)),
+                                gapPadding: 0,
+                              ),
+                            ),
+                            items: viewModel.companies.map((company) {
+                              return new DropdownMenuItem<int>(
+                                value: company.id,
+                                child: new Text(company.name),
+                              );
+                            }).toList(),
+                            onChanged: (companyId) {
+                              viewModel.selectedCompanyId = companyId;
+                            },
+                          ),
+                        )),
+                        SizedBox(width: 16),
+                        Obx(
+                            () => Expanded(
+                            child: DropdownButtonFormField<int>(
+                              decoration: const InputDecoration(
+                                labelText: "Chọn loại xe",
+                                border: const OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(const Radius.circular(20)),
+                                  gapPadding: 0,
+                                ),
+                              ),
+                              items: viewModel.vehicleTypes.map((type) {
+                                return new DropdownMenuItem<int>(
+                                  value: type.id,
+                                  child: new Text(type.typeName),
+                                );
+                              }).toList(),
+                              onChanged: (typeId) => viewModel.onSelectVehicleGroup(typeId),
                             ),
                           ),
-                          items: viewModel.companies.map((company) {
-                            return new DropdownMenuItem<int>(
-                              value: company.id,
-                              child: new Text(company.name),
-                            );
-                          }).toList(),
-                          onChanged: (companyId) {
-                            viewModel.selectedCompanyId = companyId;
-                          },
-                        )),
-                    SizedBox(height: 16),
-                    DropdownButtonFormField<int>(
-                      decoration: const InputDecoration(
-                        labelText: "Chọn loại xe",
-                        border: const OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(const Radius.circular(20)),
-                          gapPadding: 0,
                         ),
-                      ),
-                      items: viewModel.vehicleTypes.map((type) {
-                        return new DropdownMenuItem<int>(
-                          value: type.id,
-                          child: new Text(type.typeName),
-                        );
-                      }).toList(),
-                      onChanged: (typeId) => viewModel.onSelectVehicleGroup(typeId),
+                      ],
                     ),
-                    SizedBox(height: 16),
-                    DropdownButtonFormField<int>(
-                      decoration: const InputDecoration(
-                        labelText: "Chọn dòng xe",
-                        border: const OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(const Radius.circular(20)),
-                          gapPadding: 0,
+                    SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Obx(
+                            () => Expanded(
+                            child: DropdownButtonFormField<int>(
+                              decoration: const InputDecoration(
+                                labelText: "Chọn dòng xe",
+                                border: const OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(const Radius.circular(20)),
+                                  gapPadding: 0,
+                                ),
+                              ),
+                              items: viewModel.vehicleGroups.map((group) {
+                                return new DropdownMenuItem<int>(
+                                  value: group.id,
+                                  child: new Text(group.name),
+                                );
+                              }).toList(),
+                              onChanged: (groupId) {
+                                viewModel.selectedGroupId = groupId;
+                              },
+                            ),
+                          ),
                         ),
-                      ),
-                      items: viewModel.vehicleGroups.map((group) {
-                        return new DropdownMenuItem<int>(
-                          value: group.id,
-                          child: new Text(group.name),
-                        );
-                      }).toList(),
-                      onChanged: (groupId) {
-                        viewModel.selectedGroupId = groupId;
-                      },
+                        SizedBox(width: 16),
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                            decoration: const InputDecoration(
+                              labelText: "Chọn màu sắc",
+                              border: const OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(const Radius.circular(20)),
+                                gapPadding: 0,
+                              ),
+                            ),
+                            items: <String>['Đỏ', 'Vàng', 'Xanh', 'Xám'].map((String value) {
+                              return new DropdownMenuItem<String>(
+                                value: value,
+                                child: new Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (color) { viewModel.selectedColor = color; },
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 8),
                     TextField(
                       controller: viewModel.plateNumberInputController,
                       decoration: InputDecoration(
@@ -104,46 +141,29 @@ class AddBikeBottomSheet extends BaseView<AddBikeBottomSheetModel> {
                           hintText: "Nhập biển số xe",
                           hintStyle: TextStyle(color: Colors.grey, fontSize: 14)),
                     ),
-                    SizedBox(height: 16),
-                    DropdownButtonFormField<String>(
-                      decoration: const InputDecoration(
-                        labelText: "Chọn màu sắc",
-                        border: const OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(const Radius.circular(20)),
-                          gapPadding: 0,
-                        ),
-                      ),
-                      items: <String>['Đỏ', 'Vàng', 'Xanh', 'Xám'].map((String value) {
-                        return new DropdownMenuItem<String>(
-                          value: value,
-                          child: new Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (color) {},
-                    ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 8),
                     TextField(
                       controller: viewModel.chassisNumberInputController,
                       decoration: InputDecoration(
-                        labelText: "Số khung",
-                        border: new OutlineInputBorder(
-                          gapPadding: 0,
-                          borderRadius: const BorderRadius.all(const Radius.circular(20)),
-                        ),
-                        hintText: "Nhập số khung",
-                        hintStyle: TextStyle(color: Colors.grey, fontSize: 14)),
+                          labelText: "Số khung",
+                          border: new OutlineInputBorder(
+                            gapPadding: 0,
+                            borderRadius: const BorderRadius.all(const Radius.circular(20)),
+                          ),
+                          hintText: "Nhập số khung",
+                          hintStyle: TextStyle(color: Colors.grey, fontSize: 14)),
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 8),
                     TextField(
                       controller: viewModel.engineNumberInputController,
                       decoration: InputDecoration(
-                        labelText: "Số máy",
-                        border: new OutlineInputBorder(
-                          gapPadding: 0,
-                          borderRadius: const BorderRadius.all(const Radius.circular(20)),
-                        ),
-                        hintText: "Nhập số máy",
-                        hintStyle: TextStyle(color: Colors.grey, fontSize: 14)),
+                          labelText: "Số máy",
+                          border: new OutlineInputBorder(
+                            gapPadding: 0,
+                            borderRadius: const BorderRadius.all(const Radius.circular(20)),
+                          ),
+                          hintText: "Nhập số máy",
+                          hintStyle: TextStyle(color: Colors.grey, fontSize: 14)),
                     ),
                     SizedBox(height: 32),
                     FlatButton(

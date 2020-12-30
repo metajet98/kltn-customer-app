@@ -1,6 +1,6 @@
 import 'package:customer_app/backend/services/vehicle_service.dart';
 import 'package:customer_app/event_bus.dart';
-import 'package:customer_app/events/event_add_bike_success.dart';
+import 'package:customer_app/events/event_my_bike_change.dart';
 import 'package:customer_app/models/vehicle/vehicle_company.dart';
 import 'package:customer_app/models/vehicle/vehicle_group.dart';
 import 'package:customer_app/models/vehicle/vehicle_type.dart';
@@ -58,15 +58,16 @@ class AddBikeBottomSheetModel extends BaseViewModel<AddBikeBottomSheet> {
   void createBike() {
     var params = <String, dynamic>{
       "vehicleGroupId": selectedGroupId,
-      "ChassisNumber": chassisNumberInputController.text,
-      "EngineNumber": engineNumberInputController.text,
-      "PlateNumber": plateNumberInputController.text,
-      "Color": selectedColor
+      "chassisNumber": chassisNumberInputController.text,
+      "engineNumber": engineNumberInputController.text,
+      "plateNumber": plateNumberInputController.text,
+      "color": selectedColor
     };
+    print(params);
     call(() async {
       await vehicleService.createUserVehicle(params: params);
-      eventBus.fire(EventAddBikeSuccess());
       Get.back();
-    });
+      eventBus.fire(EventMyBikeChange());
+    }, toastOnError: true, background: false);
   }
 }

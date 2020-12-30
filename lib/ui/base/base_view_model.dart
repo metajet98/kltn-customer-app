@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:customer_app/backend/http_error.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';

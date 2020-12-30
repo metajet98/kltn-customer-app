@@ -32,5 +32,8 @@ abstract class VehicleService {
   Future<ObjectResponse<void>> createUserVehicle({@Body() Map<String, dynamic> params});
 
   @GET("/user-vehicle")
-  Future<ArrayResponse<Vehicle>> getUserVehicle();
+  Future<ArrayResponse<Vehicle>> getUserVehicles();
+
+  @GET("/user-vehicle/{id}")
+  Future<ObjectResponse<Vehicle>> getUserVehicle(@Path("id") int id);
 }

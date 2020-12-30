@@ -27,4 +27,17 @@ class NotificationsScreen extends BaseView<NotificationsScreenModel> {
     );
   }
 
+  @override
+  BaseViewState<NotificationsScreenModel> createState() => NotificationsScreenState();
+}
+
+class NotificationsScreenState extends BaseViewState<NotificationsScreenModel> with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return widget.build(context);
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }

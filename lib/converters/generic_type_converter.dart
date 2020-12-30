@@ -1,3 +1,9 @@
+import 'package:customer_app/models/branch/branch.dart';
+import 'package:customer_app/models/maintenance/bill_detail.dart';
+import 'package:customer_app/models/maintenance/maintenance.dart';
+import 'package:customer_app/models/maintenance/sparepart_detail.dart';
+import 'package:customer_app/models/maintenance/sparepart_item.dart';
+import 'package:customer_app/models/maintenance/status.dart';
 import 'package:customer_app/models/user/user.dart';
 import 'package:customer_app/models/vehicle/vehicle.dart';
 import 'package:customer_app/models/vehicle/vehicle_company.dart';
@@ -29,6 +35,18 @@ class GenericTypeConverter<T> implements JsonConverter<T, Object> {
         return VehicleCompany.fromJson(map) as T;
       case Vehicle:
         return Vehicle.fromJson(map) as T;
+      case Maintenance:
+        return Maintenance.fromJson(map) as T;
+      case Branch:
+        return Branch.fromJson(map) as T;
+      case BillDetail:
+        return BillDetail.fromJson(map) as T;
+      case SparePartDetail:
+        return SparePartDetail.fromJson(map) as T;
+      case SparePartItem:
+        return SparePartItem.fromJson(map) as T;
+      case Status:
+        return Status.fromJson(map) as T;
     }
     return map as T;
   }

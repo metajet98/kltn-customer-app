@@ -3,6 +3,9 @@ import 'package:customer_app/ui/base/base_view_model.dart';
 import 'package:flutter/material.dart';
 
 abstract class BaseView<T extends BaseViewModel> extends StatefulWidget {
+
+  BaseView({Key key}) : super(key: key);
+
   final T viewModel = locator<T>();
 
   void onInit() {

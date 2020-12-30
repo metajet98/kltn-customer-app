@@ -49,6 +49,7 @@ class LoginScreen extends BaseView<LoginScreenModel> {
                           ),
                           SizedBox(height: 16),
                           TextField(
+                            obscureText: true,
                             controller: _passwordInputController,
                             decoration: InputDecoration(
                               labelText: "Mật khẩu",

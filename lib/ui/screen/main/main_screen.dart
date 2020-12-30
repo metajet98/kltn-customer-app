@@ -17,9 +17,9 @@ class MainScreen extends BaseView<MainScreenModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(() => PageView(
+      body: PageView(
         onPageChanged: viewModel.onPageViewSnap,
-        physics: viewModel.selectedIndex == 4 ? NeverScrollableScrollPhysics() : AlwaysScrollableScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         controller: viewModel.pageController,
         children: [
           NotificationsScreen(),
@@ -28,7 +28,7 @@ class MainScreen extends BaseView<MainScreenModel> {
           CustomerCareScreen(),
           BranchMapScreen(),
         ],
-      )),
+      ),
       drawer: MainDrawer(),
       bottomNavigationBar: Obx(() => BottomNavigationBar(
             currentIndex: viewModel.selectedIndex,

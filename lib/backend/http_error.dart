@@ -11,6 +11,13 @@ class HttpError extends DioError {
       return "Không thể kết nối đến máy chủ, vui lòng kiểm tra lại mạng!";
     }
 
+    if(response?.data is Map) {
+      var responseData = response.data as Map;
+      if(responseData.containsKey("message")) {
+        return responseData["message"] as String;
+      }
+    }
+
     if (response?.data is Map) {
       final StringBuffer buffer = StringBuffer();
       response?.data?.forEach((key, value) {

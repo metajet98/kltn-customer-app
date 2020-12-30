@@ -68,6 +68,7 @@ class RegisterScreen extends BaseView<RegisterScreenModel> {
                           SizedBox(height: 16),
                           TextField(
                             controller: _passwordInputController,
+                            obscureText: true,
                             decoration: InputDecoration(
                               labelText: "Mật khẩu",
                               hintText: "Nhập mật khẩu",
@@ -84,7 +85,7 @@ class RegisterScreen extends BaseView<RegisterScreenModel> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             onPressed: () =>
-                              viewModel.onRegister(_phoneInputController.text, _passwordInputController.text),
+                              viewModel.onRegister(_fullNameInputController.text, _phoneInputController.text, _passwordInputController.text),
                             child: Padding(
                               padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
                               child: Text(

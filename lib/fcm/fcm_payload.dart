@@ -6,18 +6,18 @@ class FcmPayload {
 
   final String body;
 
-  final String type;
+  final String activity;
 
   final Map<String, dynamic> data;
 
   bool get isDataMessage => title == null && body == null;
 
-  FcmPayload({this.title, this.body, this.type, this.data});
+  FcmPayload({this.title, this.body, this.activity, this.data});
 
   factory FcmPayload.create(Map<String, dynamic> message) {
     String title;
     String body;
-    String type;
+    String activity;
     Map<String, dynamic> data;
 
     if (Platform.isAndroid) {
@@ -27,11 +27,8 @@ class FcmPayload {
         body = notificationPayload["body"] as String;
       }
       if (message.containsKey("data")) {
-        final dataPayload = Map<String, dynamic>.from(message["data"] as Map);
-        type = dataPayload["type"] as String;
-        if (dataPayload.containsKey("data")) {
-          data = Map<String, dynamic>.from(json.decode(dataPayload["data"] as String) as Map);
-        }
+        data = Map<String, dynamic>.from(message["data"] as Map);
+        activity = data["activity"] as String;
       }
     } else {
       if (message.containsKey("aps")) {
@@ -42,16 +39,16 @@ class FcmPayload {
           body = alert["body"] as String;
         }
       }
-      type = message["type"] as String;
       if (message.containsKey("data")) {
         data = Map<String, dynamic>.from(json.decode(message["data"] as String) as Map<String, dynamic>);
+        activity = data["activity"] as String;
       }
     }
 
     return FcmPayload(
       title: title,
       body: body,
-      type: type,
+      activity: activity,
       data: data,
     );
   }
@@ -62,7 +59,7 @@ class FcmPayload {
       return FcmPayload(
         title: parsed["title"] as String,
         body: parsed["body"] as String,
-        type: parsed["type"] as String,
+        activity: parsed["activity"] as String,
         data: parsed["data"] as Map<String, dynamic>,
       );
     } on FormatException {
@@ -73,7 +70,7 @@ class FcmPayload {
   String toJson() => jsonEncode({
         "title": title,
         "body": body,
-        "type": type,
+        "activity": activity,
         "data": data,
       });
 }

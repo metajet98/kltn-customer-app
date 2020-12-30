@@ -20,7 +20,7 @@ class SplashScreenModel extends BaseViewModel<SplashScreen> {
     super.onInit();
     fcmManager.init();
     await Future.delayed(const Duration(seconds: 2), () {
-      Get.to(authManager.isLoggedIn() ? MainScreen() : LoginScreen());
+      Get.offAll(authManager.isLoggedIn() ? MainScreen() : LoginScreen());
     });
   }
 }

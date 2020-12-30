@@ -7,7 +7,7 @@ class VehicleGroup {
   @JsonKey(name: "id")
   int id;
 
-  @JsonKey(name: "Capacity")
+  @JsonKey(name: "capacity")
   int capacity;
 
   @JsonKey(name: "name")
@@ -16,11 +16,11 @@ class VehicleGroup {
   @JsonKey(name: "logo")
   String logo;
 
-  @JsonKey(name: "Image")
-  String Image;
+  @JsonKey(name: "image")
+  String image;
 
 
-  VehicleGroup(this.id, this.capacity, this.name, this.logo, this.Image);
+  VehicleGroup(this.id, this.capacity, this.name, this.logo, this.image);
 
   factory VehicleGroup.fromJson(Map<String, dynamic> json) => _$VehicleGroupFromJson(json);
 

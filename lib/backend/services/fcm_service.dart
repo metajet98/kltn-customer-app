@@ -8,7 +8,7 @@ import 'package:retrofit/http.dart';
 part 'fcm_service.g.dart';
 
 @lazySingleton
-@RestApi(baseUrl: "${BackendConfig.BASE_URL}/api/client/v1/fcm")
+@RestApi(baseUrl: "${BackendConfig.BASE_URL}/api/fcm")
 abstract class FcmService {
   @factoryMethod
   factory FcmService() => _FcmService(locator<HttpClient>().dio);

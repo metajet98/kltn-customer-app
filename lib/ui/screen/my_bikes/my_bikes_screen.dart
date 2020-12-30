@@ -9,6 +9,8 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 
 class MyBikesScreen extends BaseView<MyBikesScreenModel> {
+  MyBikesScreen({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,12 +31,52 @@ class MyBikesScreen extends BaseView<MyBikesScreenModel> {
               onPressed: () => Get.bottomSheet(AddBikeBottomSheet(), isScrollControlled: true)),
         ],
       ),
-      body: EasyListView(
-        itemCount: 10,
-        padding: EdgeInsets.all(16),
-        itemBuilder: (ctx, index) => MyBikeItemView(),
-        dividerBuilder: (ctx, index) => SizedBox(height: 16),
+      body: RefreshIndicator(
+        onRefresh: () => viewModel.loadVehicle(showLoading: false),
+        child: Obx(
+          () => EasyListView(
+            placeholderWidget: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Bạn chưa có xe nào cả, hãy tạo xe và tham gia bảo dưỡng ngay!",
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 8),
+                  FlatButton(
+                    color: Colors.blueAccent,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                    onPressed: () => Get.bottomSheet(AddBikeBottomSheet(), isScrollControlled: true),
+                    child: Text(
+                      "Thêm xe mới",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            itemCount: viewModel.userVehicles?.length ?? 0,
+            padding: EdgeInsets.all(16),
+            itemBuilder: (ctx, index) => MyBikeItemView(viewModel.userVehicles[index]),
+            dividerBuilder: (ctx, index) => SizedBox(height: 16),
+          ),
+        ),
       ),
     );
   }
+
+  @override
+  BaseViewState<MyBikesScreenModel> createState() => MyBikesScreenState();
+}
+
+class MyBikesScreenState extends BaseViewState<MyBikesScreenModel> with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return widget.build(context);
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }
