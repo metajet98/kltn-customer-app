@@ -39,6 +39,10 @@ class MaintenanceHistoryItemView extends StatelessWidget {
                     style: TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                   Spacer(),
+                  Text(
+                    "Trạng thái: ",
+                    style: TextStyle(fontSize: 12),
+                  ),
                   _buildStatusText(maintenance.status)
                 ],
               )
@@ -50,25 +54,28 @@ class MaintenanceHistoryItemView extends StatelessWidget {
   }
 
   _buildStatusText(int status) {
-    switch(status) {
-      case maintenanceCreated: {
-        return Text(
-          "Mới nhận xe",
-          style: TextStyle(fontSize: 12, color: Colors.grey),
-        );
-      }
-      case underMaintenance: {
-        return Text(
-          "Đang bảo dưỡng",
-          style: TextStyle(fontSize: 12, color: Colors.red),
-        );
-      }
-      case maintenanceFinish: {
-        return Text(
-          "Kết thúc",
-          style: TextStyle(fontSize: 12, color: Colors.green),
-        );
-      }
+    switch (status) {
+      case maintenanceCreated:
+        {
+          return Text(
+            "Mới nhận xe",
+            style: TextStyle(fontSize: 12, color: Colors.grey),
+          );
+        }
+      case underMaintenance:
+        {
+          return Text(
+            "Đang bảo dưỡng",
+            style: TextStyle(fontSize: 12, color: Colors.red),
+          );
+        }
+      case maintenanceFinish:
+        {
+          return Text(
+            "Kết thúc",
+            style: TextStyle(fontSize: 12, color: Colors.green),
+          );
+        }
     }
   }
 }

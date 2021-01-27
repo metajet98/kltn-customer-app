@@ -4,11 +4,11 @@ import 'package:customer_app/ui/base/base_view.dart';
 import 'package:customer_app/ui/screen/maintenance_detail/bottom_sheet/review/review_bottom_sheet.dart';
 import 'package:customer_app/ui/screen/maintenance_detail/maintenance_detail_screen_model.dart';
 import 'package:customer_app/ui/screen/maintenance_detail/views/bill_table_view.dart';
+import 'package:customer_app/ui/screen/maintenance_detail/views/maintenance_images_view.dart';
 import 'package:customer_app/ui/screen/maintenance_detail/views/sparepart_result_item_view.dart';
 import 'package:customer_app/ui/shared/list_view/easy_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 
 class MaintenanceDetailScreen extends BaseView<MaintenanceDetailScreenModel> {
@@ -28,13 +28,18 @@ class MaintenanceDetailScreen extends BaseView<MaintenanceDetailScreenModel> {
           style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
         ),
         actions: [
-          Obx(() => Visibility(visible: viewModel.maintenance?.status == maintenanceFinish,
-            child: IconButton(
-            icon: Icon(
-              Icons.rate_review_outlined,
-              color: Colors.black,
+          Obx(
+            () => Visibility(
+              visible: viewModel.maintenance?.status == maintenanceFinish,
+              child: IconButton(
+                icon: Icon(
+                  Icons.rate_review_outlined,
+                  color: Colors.black,
+                ),
+                onPressed: () => viewModel.openReview(),
+              ),
             ),
-            onPressed: () => Get.bottomSheet(ReviewBottomSheet(viewModel.maintenanceId), isScrollControlled: true)),))
+          ),
         ],
       ),
       backgroundColor: Colors.white,
@@ -46,38 +51,46 @@ class MaintenanceDetailScreen extends BaseView<MaintenanceDetailScreenModel> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.all(16),
+                padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Obx(() => Text(
+                    Obx(() => buildInfo(
+                          Icons.person,
                           "Nhân viên: ${viewModel.maintenance?.receptionStaff?.fullName ?? ""}",
-                          style: TextStyle(fontSize: 16),
                         )),
-                    Obx(() => Text(
+                    Obx(() => buildInfo(
+                          Icons.map,
                           "Chi nhánh: ${viewModel.maintenance?.branch?.name ?? ""}",
-                          style: TextStyle(fontSize: 16),
                         )),
-                    Obx(() => Text(
+                    Obx(() => buildInfo(
+                          Icons.access_time,
                           "Thời gian nhận xe: ${FormatHelper.formatDateTime(viewModel.maintenance?.createdDate)}",
-                          style: TextStyle(fontSize: 16),
                         )),
-                    Obx(() => Text(
+                    Obx(() => buildInfo(
+                          Icons.refresh,
                           "Đồng hồ: ${viewModel.maintenance?.odometer ?? ""} km",
-                          style: TextStyle(fontSize: 16),
                         )),
                     SizedBox(height: 16),
                     Text("Ghi chú", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                     SizedBox(height: 8),
                     Obx(
                       () => TextField(
+                        minLines: 3,
+                        maxLines: 20,
                         enabled: false,
                         decoration: InputDecoration(
-                            hintText: viewModel.maintenance?.notes, border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                          alignLabelWithHint: true,
+                          hintText: viewModel.maintenance?.notes,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(height: 16),
                     Text("Kết quả kiểm tra", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    SizedBox(height: 8),
                   ],
                 ),
               ),
@@ -85,8 +98,11 @@ class MaintenanceDetailScreen extends BaseView<MaintenanceDetailScreenModel> {
                 () => EasyListView(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.only(left: 16, right: 16),
                   itemCount: viewModel.maintenance?.sparePartCheckDetail?.length ?? 0,
+                  dividerBuilder: (ctx, index) => Divider(
+                    color: Colors.grey,
+                  ),
                   itemBuilder: (ctx, index) => SparePartResultItemView(
                     sparePartDetail: viewModel.maintenance?.sparePartCheckDetail[index],
                   ),
@@ -94,15 +110,36 @@ class MaintenanceDetailScreen extends BaseView<MaintenanceDetailScreenModel> {
               ),
               Padding(
                 padding: EdgeInsets.all(16),
-                child: Obx(() =>
-                    Text("Chi phí ${FormatHelper.formatMoney(viewModel.totalPrice)}", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
+                child: Obx(() => Text("Tổng chi phí ${FormatHelper.formatMoney(viewModel.totalPrice)}",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
               ),
               Obx(
                 () => Padding(padding: EdgeInsets.all(16), child: BillTableView(billDetails: viewModel.maintenance?.maintenanceBillDetail)),
               ),
+              Obx(() => Visibility(
+                    child: MaintenanceImageView(images: viewModel.maintenance?.maintenanceImages),
+                    visible: !GetUtils.isNullOrBlank(viewModel.maintenance?.maintenanceImages),
+                  ))
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildInfo(IconData iconData, String text) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey))),
+      child: Row(
+        children: [
+          Icon(iconData),
+          SizedBox(width: 8),
+          Text(
+            text,
+            style: TextStyle(fontSize: 16, color: Colors.black),
+          )
+        ],
       ),
     );
   }

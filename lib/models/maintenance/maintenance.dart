@@ -1,5 +1,7 @@
 import 'package:customer_app/models/branch/branch.dart';
 import 'package:customer_app/models/maintenance/bill_detail.dart';
+import 'package:customer_app/models/maintenance/maintenance_image.dart';
+import 'package:customer_app/models/maintenance/review.dart';
 import 'package:customer_app/models/maintenance/sparepart_detail.dart';
 import 'package:customer_app/models/user/user.dart';
 import 'package:customer_app/models/vehicle/vehicle.dart';
@@ -56,6 +58,12 @@ class Maintenance {
 
   @JsonKey(name: "status")
   int status;
+
+  @JsonKey(name: "maintenanceImage")
+  List<MaintenanceImage> maintenanceImages;
+
+  @JsonKey(name: "review")
+  Review review;
 
   Maintenance(
       {this.id,

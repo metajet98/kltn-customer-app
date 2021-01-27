@@ -35,6 +35,7 @@ class ScheduleScreen extends BaseView<ScheduleScreenModel> {
           () => EasyListView(
             itemCount: viewModel.schedules?.length ?? 0,
             padding: EdgeInsets.all(16),
+            placeholderWidget: Center(child: Text("Bạn chưa có lịch hẹn nào đối với xe này cả!")),
             itemBuilder: (ctx, index) => ScheduleView(schedule: viewModel.schedules[index]),
             dividerBuilder: (ctx, index) => SizedBox(height: 16),
           ),

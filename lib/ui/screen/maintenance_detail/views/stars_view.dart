@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 class StarView extends StatefulWidget {
   final Function(int) onStarChoose;
 
-  const StarView({Key key, this.onStarChoose}) : super(key: key);
+  final int initStar;
+
+  const StarView({Key key, this.onStarChoose, this.initStar}) : super(key: key);
 
   @override
   _StarViewState createState() => _StarViewState();
@@ -13,6 +15,16 @@ class StarView extends StatefulWidget {
 
 class _StarViewState extends State<StarView> {
   int currentStar = 0;
+
+  @override
+  void initState() {
+    if(widget.initStar != null) {
+      setState(() {
+        currentStar = widget.initStar;
+      });
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

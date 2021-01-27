@@ -1,6 +1,7 @@
 import 'package:customer_app/backend/services/maintenance_service.dart';
 import 'package:customer_app/models/maintenance/maintenance.dart';
 import 'package:customer_app/ui/base/base_view_model.dart';
+import 'package:customer_app/ui/screen/maintenance_detail/bottom_sheet/review/review_bottom_sheet.dart';
 import 'package:customer_app/ui/screen/maintenance_detail/maintenance_detail_screen.dart';
 import 'package:injectable/injectable.dart';
 import 'package:get/get.dart';
@@ -36,5 +37,12 @@ class MaintenanceDetailScreenModel extends BaseViewModel<MaintenanceDetailScreen
     return call(() async {
       _maintenance.value = (await maintenanceService.getMaintenance(maintenanceId: maintenanceId)).data;
     }, background: !showLoading);
+  }
+
+  Future openReview() async {
+    var result = await Get.bottomSheet(ReviewBottomSheet(maintenanceId, maintenance?.review), isScrollControlled: true);
+    if(result != null) {
+      loadData(showLoading: true);
+    }
   }
 }

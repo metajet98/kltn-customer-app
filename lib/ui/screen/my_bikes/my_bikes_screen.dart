@@ -14,6 +14,17 @@ class MyBikesScreen extends BaseView<MyBikesScreenModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FlatButton(
+        padding: EdgeInsets.all(8),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Text(
+          "Tạo xe\nmới",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+          textAlign: TextAlign.center,
+        ),
+        onPressed: () => Get.bottomSheet(AddBikeBottomSheet(), isScrollControlled: true),
+        color: Colors.blueAccent,
+      ),
       appBar: AppBar(
         elevation: 5,
         backgroundColor: Colors.white,
@@ -22,14 +33,6 @@ class MyBikesScreen extends BaseView<MyBikesScreenModel> {
           "Danh sách xe",
           style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
         ),
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.add,
-                color: Colors.blueAccent,
-              ),
-              onPressed: () => Get.bottomSheet(AddBikeBottomSheet(), isScrollControlled: true)),
-        ],
       ),
       body: RefreshIndicator(
         onRefresh: () => viewModel.loadVehicle(showLoading: false),
