@@ -38,6 +38,7 @@ class LoginScreen extends BaseView<LoginScreenModel> {
                           SizedBox(height: 32),
                           TextField(
                             controller: _phoneInputController,
+                            keyboardType: TextInputType.phone,
                             decoration: InputDecoration(
                                 labelText: "Số điện thoại",
                                 border: new OutlineInputBorder(
@@ -50,6 +51,7 @@ class LoginScreen extends BaseView<LoginScreenModel> {
                           SizedBox(height: 16),
                           TextField(
                             obscureText: true,
+                            keyboardType: TextInputType.visiblePassword,
                             controller: _passwordInputController,
                             decoration: InputDecoration(
                               labelText: "Mật khẩu",

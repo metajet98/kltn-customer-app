@@ -44,6 +44,7 @@ class RegisterScreen extends BaseView<RegisterScreenModel> {
                           SizedBox(height: 32),
                           TextField(
                             controller: _fullNameInputController,
+                            keyboardType: TextInputType.name,
                             decoration: InputDecoration(
                               labelText: "Họ và tên",
                               border: new OutlineInputBorder(
@@ -56,6 +57,7 @@ class RegisterScreen extends BaseView<RegisterScreenModel> {
                           SizedBox(height: 16),
                           TextField(
                             controller: _phoneInputController,
+                            keyboardType: TextInputType.phone,
                             decoration: InputDecoration(
                                 labelText: "Số điện thoại",
                                 border: new OutlineInputBorder(
@@ -69,6 +71,7 @@ class RegisterScreen extends BaseView<RegisterScreenModel> {
                           TextField(
                             controller: _passwordInputController,
                             obscureText: true,
+                            keyboardType: TextInputType.visiblePassword,
                             decoration: InputDecoration(
                               labelText: "Mật khẩu",
                               hintText: "Nhập mật khẩu",
