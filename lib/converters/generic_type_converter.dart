@@ -1,4 +1,5 @@
 import 'package:customer_app/models/branch/branch.dart';
+import 'package:customer_app/models/calender/calender.dart';
 import 'package:customer_app/models/maintenance/bill_detail.dart';
 import 'package:customer_app/models/maintenance/maintenance.dart';
 import 'package:customer_app/models/maintenance/schedule.dart';
@@ -72,6 +73,8 @@ class GenericTypeConverter<T> implements JsonConverter<T, Object> {
         return Banner.fromJson(map) as T;
       case Notification:
         return Notification.fromJson(map) as T;
+      case Calender:
+        return Calender.fromJson(map) as T;
     }
     return map as T;
   }

@@ -1,8 +1,6 @@
-import 'dart:convert';
 
 import 'package:customer_app/storage/storage.dart';
 import 'package:injectable/injectable.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @lazySingleton

@@ -26,4 +26,7 @@ abstract class CalenderService {
 
   @POST("")
   Future<void> createCalender({@Body() Map<String, dynamic> params});
+
+  @DELETE("/{id}")
+  Future<void> deleteCalender({@Path("id") int id});
 }

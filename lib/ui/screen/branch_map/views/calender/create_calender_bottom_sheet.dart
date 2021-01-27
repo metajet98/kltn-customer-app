@@ -55,6 +55,8 @@ class CreateCalenderBottomSheet extends BaseView<CreateCalenderBottomSheetModel>
                     ),
                     SizedBox(height: 16),
                     TextField(
+                      minLines: 3,
+                      maxLines: 3,
                       controller: viewModel.notesInputController,
                       decoration: InputDecoration(
                           labelText: "Ghi chú",
@@ -63,6 +65,7 @@ class CreateCalenderBottomSheet extends BaseView<CreateCalenderBottomSheetModel>
                             borderRadius: const BorderRadius.all(const Radius.circular(20)),
                           ),
                           hintText: "Nhập ghi chú",
+                          alignLabelWithHint: true,
                           hintStyle: TextStyle(color: Colors.grey, fontSize: 14)),
                     ),
                     SizedBox(height: 16),
