@@ -3,6 +3,7 @@ import 'package:customer_app/backend/responses/array_response.dart';
 import 'package:customer_app/backend/responses/object_response.dart';
 import 'package:customer_app/configs/backend_config.dart';
 import 'package:customer_app/locator.dart';
+import 'package:customer_app/models/maintenance/schedule.dart';
 import 'package:customer_app/models/vehicle/vehicle.dart';
 import 'package:customer_app/models/vehicle/vehicle_company.dart';
 import 'package:customer_app/models/vehicle/vehicle_group.dart';
@@ -31,9 +32,12 @@ abstract class VehicleService {
   @POST("/user-vehicle")
   Future<ObjectResponse<void>> createUserVehicle({@Body() Map<String, dynamic> params});
 
-  @GET("/user-vehicle")
+  @GET("/user-vehicle/self")
   Future<ArrayResponse<Vehicle>> getUserVehicles();
 
   @GET("/user-vehicle/{id}")
   Future<ObjectResponse<Vehicle>> getUserVehicle(@Path("id") int id);
+
+  @GET("/user-vehicle/{id}/schedule")
+  Future<ArrayResponse<Schedule>> getUserVehicleSchedule(@Path("id") int id);
 }

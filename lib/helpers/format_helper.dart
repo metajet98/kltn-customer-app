@@ -11,7 +11,7 @@ class FormatHelper {
     return formatter.format(value);
   }
 
-  static String formatDateTime(DateTime dateTime, {String pattern = "HH:mm dd/mm/yyyy"}) {
+  static String formatDateTime(DateTime dateTime, {String pattern = "HH:mm dd/MM/yyyy"}) {
     if (dateTime == null) {
       return "";
     }

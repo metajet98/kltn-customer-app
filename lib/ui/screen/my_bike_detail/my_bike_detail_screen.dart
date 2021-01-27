@@ -1,6 +1,7 @@
 import 'package:customer_app/ui/base/base_view.dart';
 import 'package:customer_app/ui/screen/my_bike_detail/my_bike_detail_screen_model.dart';
 import 'package:customer_app/ui/screen/my_bike_detail/views/maintenance_history_item_view.dart';
+import 'package:customer_app/ui/screen/schedule/schedule_screen.dart';
 import 'package:customer_app/ui/shared/list_view/easy_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -24,7 +25,16 @@ class MyBikeDetailScreen extends BaseView<MyBikeDetailScreenModel> {
               viewModel.userVehicle?.name ?? viewModel.userVehicle?.vehicleGroup?.name ?? "Thông tin xe",
               style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
             )),
-        actions: [IconButton(icon: Icon(FontAwesome.bell, color: Colors.grey), onPressed: () {})],
+        actions: [
+          IconButton(
+            icon: Icon(FontAwesome.bell, color: Colors.grey),
+            onPressed: () => Get.to(
+              ScheduleScreen(
+                userVehicleId: viewModel.userVehicleId,
+              ),
+            ),
+          ),
+        ],
       ),
       backgroundColor: Colors.white,
       body: Column(
@@ -93,6 +103,7 @@ class MyBikeDetailScreen extends BaseView<MyBikeDetailScreenModel> {
               child: EasyListView(
                 padding: EdgeInsets.all(16),
                 itemCount: viewModel.maintenances?.length ?? 0,
+                dividerBuilder: (ctx, index) => SizedBox(height: 16),
                 itemBuilder: (ctx, index) => MaintenanceHistoryItemView(maintenance: viewModel.maintenances[index]),
               ),
             ),

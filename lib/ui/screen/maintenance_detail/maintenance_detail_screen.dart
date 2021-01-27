@@ -1,11 +1,14 @@
+import 'package:customer_app/constaints/constaints.dart';
 import 'package:customer_app/helpers/format_helper.dart';
 import 'package:customer_app/ui/base/base_view.dart';
+import 'package:customer_app/ui/screen/maintenance_detail/bottom_sheet/review/review_bottom_sheet.dart';
 import 'package:customer_app/ui/screen/maintenance_detail/maintenance_detail_screen_model.dart';
 import 'package:customer_app/ui/screen/maintenance_detail/views/bill_table_view.dart';
 import 'package:customer_app/ui/screen/maintenance_detail/views/sparepart_result_item_view.dart';
 import 'package:customer_app/ui/shared/list_view/easy_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 
 class MaintenanceDetailScreen extends BaseView<MaintenanceDetailScreenModel> {
@@ -24,6 +27,15 @@ class MaintenanceDetailScreen extends BaseView<MaintenanceDetailScreenModel> {
           "Chi tiết lượt bảo dưỡng",
           style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
         ),
+        actions: [
+          Obx(() => Visibility(visible: viewModel.maintenance?.status == maintenanceFinish,
+            child: IconButton(
+            icon: Icon(
+              Icons.rate_review_outlined,
+              color: Colors.black,
+            ),
+            onPressed: () => Get.bottomSheet(ReviewBottomSheet(viewModel.maintenanceId), isScrollControlled: true)),))
+        ],
       ),
       backgroundColor: Colors.white,
       body: RefreshIndicator(
@@ -61,8 +73,7 @@ class MaintenanceDetailScreen extends BaseView<MaintenanceDetailScreenModel> {
                       () => TextField(
                         enabled: false,
                         decoration: InputDecoration(
-                            hintText: viewModel.maintenance?.notes,
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                            hintText: viewModel.maintenance?.notes, border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
                       ),
                     ),
                     SizedBox(height: 16),
@@ -83,10 +94,11 @@ class MaintenanceDetailScreen extends BaseView<MaintenanceDetailScreenModel> {
               ),
               Padding(
                 padding: EdgeInsets.all(16),
-                child: Obx(() => Text("Chi phí ${FormatHelper.formatMoney(viewModel.totalPrice)}", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
+                child: Obx(() =>
+                    Text("Chi phí ${FormatHelper.formatMoney(viewModel.totalPrice)}", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
               ),
               Obx(
-                () => Padding(padding: EdgeInsets.all(16) ,child: BillTableView(billDetails: viewModel.maintenance?.maintenanceBillDetail)),
+                () => Padding(padding: EdgeInsets.all(16), child: BillTableView(billDetails: viewModel.maintenance?.maintenanceBillDetail)),
               ),
             ],
           ),

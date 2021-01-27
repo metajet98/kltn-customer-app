@@ -20,17 +20,25 @@ class BranchMapScreen extends BaseView<BranchMapScreenModel> {
 
   @override
   Widget build(BuildContext context) {
-    return GoogleMap(
-      mapType: MapType.normal,
-      initialCameraPosition: _kGooglePlex,
-      gestureRecognizers: Set()..add(Factory<PanGestureRecognizer>(() => PanGestureRecognizer())),
-      markers: Set.from([Marker(markerId: MarkerId("asdads"), position: LatLng(16.159835, 107.502267), onTap: () {
-        Get.bottomSheet(BranchDetailBottomSheet());
-      })]),
-      onMapCreated: (GoogleMapController controller) {
-        _controller.complete(controller);
-      },
-    );
+    return Obx(() => GoogleMap(
+          mapType: MapType.normal,
+          initialCameraPosition: _kGooglePlex,
+          gestureRecognizers: Set()..add(Factory<PanGestureRecognizer>(() => PanGestureRecognizer())),
+          markers: Set.from(viewModel.branches
+              ?.map((branch) =>
+                  Marker(
+                    markerId: MarkerId(branch.id.toString()),
+                    position: LatLng(branch.latitude, branch.longitude),
+                    onTap: () {
+                      Get.bottomSheet(BranchDetailBottomSheet(branch: branch), isScrollControlled: true);
+                    },
+                  ) ??
+                  [])
+              ?.toList()),
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
+        ));
   }
 
   @override

@@ -1,6 +1,5 @@
 import 'package:customer_app/locator.dart';
-import 'package:customer_app/ui/screen/main/main_screen.dart';
-import 'package:customer_app/ui/screen/spash/splash_screen.dart';
+import 'package:customer_app/ui/screen/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';

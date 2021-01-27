@@ -2,6 +2,7 @@ import 'package:customer_app/helpers/format_helper.dart';
 import 'package:customer_app/models/maintenance/bill_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class BillTableView extends StatelessWidget {
   final List<BillDetail> billDetails;
@@ -10,6 +11,7 @@ class BillTableView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(billDetails.isNullOrBlank) return Container();
     final List<TableRow> tableRows = List.from([
       TableRow(children: _buildHeader())
     ]);

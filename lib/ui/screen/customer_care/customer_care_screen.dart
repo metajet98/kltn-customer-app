@@ -1,9 +1,11 @@
 import 'package:customer_app/ui/base/base_view.dart';
+import 'package:customer_app/ui/screen/customer_care/bottom_sheet/create_topic/create_topic_bottom_sheet.dart';
 import 'package:customer_app/ui/screen/customer_care/customer_care_screen_model.dart';
 import 'package:customer_app/ui/screen/customer_care/views/topic_item_view.dart';
 import 'package:customer_app/ui/shared/list_view/easy_listview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomerCareScreen extends BaseView<CustomerCareScreenModel> {
   @override
@@ -23,15 +25,18 @@ class CustomerCareScreen extends BaseView<CustomerCareScreenModel> {
               Icons.add,
               color: Colors.blueAccent,
             ),
-            onPressed: () {}),
+            onPressed: () => Get.bottomSheet(CreateTopicBottomSheet(), isScrollControlled: true)),
         ],
       ),
-      body: EasyListView(
-        itemCount: 10,
-        padding: EdgeInsets.all(16),
-        itemBuilder: (ctx, index) => TopicItemView(),
-        dividerBuilder: (ctx, index) => SizedBox(height: 16),
-      ),
+      body: Obx(() => RefreshIndicator(
+        onRefresh: () => viewModel.loadTopic(showLoading: false),
+        child: EasyListView(
+          itemCount: viewModel.topics?.length ?? 0,
+          padding: EdgeInsets.all(16),
+          itemBuilder: (ctx, index) => TopicItemView(topic: viewModel.topics[index]),
+          dividerBuilder: (ctx, index) => SizedBox(height: 16),
+        ),
+      )),
     );
   }
 

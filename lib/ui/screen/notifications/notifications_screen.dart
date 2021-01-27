@@ -4,6 +4,7 @@ import 'package:customer_app/ui/screen/notifications/views/notification_item_vie
 import 'package:customer_app/ui/shared/list_view/easy_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class NotificationsScreen extends BaseView<NotificationsScreenModel> {
   @override
@@ -18,12 +19,15 @@ class NotificationsScreen extends BaseView<NotificationsScreenModel> {
           style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
-      body: EasyListView(
-        itemCount: 10,
-        padding: EdgeInsets.all(16),
-        itemBuilder: (ctx, index) => NotificationItemView(),
-        dividerBuilder: (ctx, index) => SizedBox(height: 16),
-      ),
+      body: Obx(() => RefreshIndicator(
+        onRefresh: () => viewModel.loadNotifications(showLoading: false),
+        child: EasyListView(
+          itemCount: viewModel.notifications?.length ?? 0,
+          padding: EdgeInsets.all(16),
+          itemBuilder: (ctx, index) => NotificationItemView(notification: viewModel.notifications[index]),
+          dividerBuilder: (ctx, index) => SizedBox(height: 16),
+        ),
+      )),
     );
   }
 

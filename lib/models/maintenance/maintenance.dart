@@ -12,6 +12,9 @@ class Maintenance {
   @JsonKey(name: "id")
   int id;
 
+  @JsonKey(name: "title")
+  String title;
+
   @JsonKey(name: "userVehicleId")
   int userVehicleId;
 
@@ -51,8 +54,13 @@ class Maintenance {
   @JsonKey(name: "sparepartCheckDetail")
   List<SparePartDetail> sparePartCheckDetail;
 
+  @JsonKey(name: "status")
+  int status;
+
   Maintenance(
       {this.id,
+        this.title,
+        this.status,
       this.userVehicleId,
       this.userVehicle,
       this.notes,

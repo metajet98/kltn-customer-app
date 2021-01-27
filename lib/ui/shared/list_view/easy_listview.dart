@@ -23,6 +23,7 @@ class EasyListView extends StatefulWidget {
     this.scrollbarEnable = true,
     this.isSliverMode = false,
     this.shrinkWrap = false,
+    this.primary
     // [Not Recommended]
     // Sliver mode will discard a lot of ListView variables (likes physics, controller),
     // and each of items must be sliver.
@@ -47,6 +48,7 @@ class EasyListView extends StatefulWidget {
   final EdgeInsetsGeometry padding;
   final bool isSliverMode;
   final bool shrinkWrap;
+  final bool primary;
 
   @override
   State<StatefulWidget> createState() => EasyListViewState();
@@ -141,6 +143,7 @@ class EasyListViewState extends State<EasyListView> {
       itemCount: totalItemCount,
       itemBuilder: _itemBuilder,
       shrinkWrap: widget.shrinkWrap,
+      primary: widget.primary,
     );
 
     final children = widget.scrollbarEnable ? [Scrollbar(child: listView)] : [listView];

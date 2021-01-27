@@ -3,7 +3,7 @@ import 'package:customer_app/fcm/fcm_manager.dart';
 import 'package:customer_app/ui/base/base_view_model.dart';
 import 'package:customer_app/ui/screen/login/login_screen.dart';
 import 'package:customer_app/ui/screen/main/main_screen.dart';
-import 'package:customer_app/ui/screen/spash/splash_screen.dart';
+import 'package:customer_app/ui/screen/splash/splash_screen.dart';
 import 'package:get/route_manager.dart';
 import 'package:injectable/injectable.dart';
 

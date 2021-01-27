@@ -1,6 +1,6 @@
 import 'package:customer_app/generated/assets.gen.dart';
 import 'package:customer_app/ui/base/base_view.dart';
-import 'package:customer_app/ui/screen/spash/splash_screen_model.dart';
+import 'package:customer_app/ui/screen/splash/splash_screen_model.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends BaseView<SplashScreenModel> {

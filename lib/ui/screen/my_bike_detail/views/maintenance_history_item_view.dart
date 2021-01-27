@@ -1,3 +1,4 @@
+import 'package:customer_app/constaints/constaints.dart';
 import 'package:customer_app/helpers/format_helper.dart';
 import 'package:customer_app/models/maintenance/maintenance.dart';
 import 'package:customer_app/ui/screen/maintenance_detail/maintenance_detail_screen.dart';
@@ -24,15 +25,50 @@ class MaintenanceHistoryItemView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Bảo dưỡng định kì", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
+              Text(
+                maintenance.title ?? "Bảo dưỡng",
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
               SizedBox(height: 4),
               Text(maintenance.branch?.name),
               SizedBox(height: 4),
-              Text(FormatHelper.formatDateTime(maintenance.createdDate), style: TextStyle(fontSize: 12, color: Colors.grey),)
+              Row(
+                children: [
+                  Text(
+                    FormatHelper.formatDateTime(maintenance.createdDate),
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                  Spacer(),
+                  _buildStatusText(maintenance.status)
+                ],
+              )
             ],
           ),
         ),
       ),
     );
+  }
+
+  _buildStatusText(int status) {
+    switch(status) {
+      case maintenanceCreated: {
+        return Text(
+          "Mới nhận xe",
+          style: TextStyle(fontSize: 12, color: Colors.grey),
+        );
+      }
+      case underMaintenance: {
+        return Text(
+          "Đang bảo dưỡng",
+          style: TextStyle(fontSize: 12, color: Colors.red),
+        );
+      }
+      case maintenanceFinish: {
+        return Text(
+          "Kết thúc",
+          style: TextStyle(fontSize: 12, color: Colors.green),
+        );
+      }
+    }
   }
 }

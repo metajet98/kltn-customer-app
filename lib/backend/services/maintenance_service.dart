@@ -21,4 +21,7 @@ abstract class MaintenanceService {
 
   @GET("/{maintenanceId}")
   Future<ObjectResponse<Maintenance>> getMaintenance({@Path("maintenanceId") int maintenanceId});
+
+  @POST("/{maintenanceId}/review")
+  Future<ObjectResponse<void>> reviewMaintenance({@Path("maintenanceId") int maintenanceId, @Body() Map<String, dynamic> params});
 }
