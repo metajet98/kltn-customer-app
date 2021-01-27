@@ -32,10 +32,26 @@ class ReplyTopicBottomSheet extends BaseView<ReplyTopicBottomSheetModel> {
                       style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 32),
-                    SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Text("Đính kèm ảnh:"),
+                        SizedBox(width: 8),
+                        Obx(
+                            () => Wrap(
+                            children: _buildImageWidgets(),
+                            spacing: 8,
+                            runSpacing: 8,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16),
                     TextField(
+                      minLines: 3,
+                      maxLines: 10,
                       controller: viewModel.contentInputController,
                       decoration: InputDecoration(
+                          alignLabelWithHint: true,
                           labelText: "Nội dung",
                           border: new OutlineInputBorder(
                             gapPadding: 0,
@@ -44,15 +60,7 @@ class ReplyTopicBottomSheet extends BaseView<ReplyTopicBottomSheetModel> {
                           hintText: "Nhập nội dung",
                           hintStyle: TextStyle(color: Colors.grey, fontSize: 14)),
                     ),
-                    SizedBox(height: 8),
-                    Obx(
-                      () => Wrap(
-                        children: _buildImageWidgets(),
-                        spacing: 8,
-                        runSpacing: 8,
-                      ),
-                    ),
-                    SizedBox(height: 32),
+                    SizedBox(height: 16),
                     FlatButton(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),

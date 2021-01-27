@@ -41,6 +41,8 @@ class CreateTopicBottomSheet extends BaseView<CreateTopicBottomSheetModel> {
                     ),
                     SizedBox(height: 8),
                     TextField(
+                      minLines: 3,
+                      maxLines: 10,
                       controller: viewModel.contentInputController,
                       decoration: InputDecoration(
                           labelText: "Nội dung",
@@ -48,16 +50,23 @@ class CreateTopicBottomSheet extends BaseView<CreateTopicBottomSheetModel> {
                             gapPadding: 0,
                             borderRadius: const BorderRadius.all(const Radius.circular(20)),
                           ),
+                          alignLabelWithHint: true,
                           hintText: "Nhập nội dung",
                           hintStyle: TextStyle(color: Colors.grey, fontSize: 14)),
                     ),
-                    SizedBox(height: 8),
-                    Obx(
-                        () => Wrap(
-                        children: _buildImageWidgets(),
-                        spacing: 8,
-                        runSpacing: 8,
-                      ),
+                    SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Text("Đính kèm ảnh:"),
+                        SizedBox(width: 8),
+                        Obx(
+                            () => Wrap(
+                            children: _buildImageWidgets(),
+                            spacing: 8,
+                            runSpacing: 8,
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 32),
                     FlatButton(

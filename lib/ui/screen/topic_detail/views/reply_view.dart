@@ -21,27 +21,29 @@ class ReplyView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.baseline,
                 children: [
-                  Text(topicReply?.user?.fullName ?? "", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+                  Text(
+                    topicReply?.user?.fullName ?? "",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
                   SizedBox(width: 8),
                   Text(FormatHelper.formatDateTime(topicReply?.createdDate) ?? "")
                 ],
               ),
               SizedBox(height: 8),
+              if (topicReply?.user?.role != "User") Padding(padding: EdgeInsets.only(bottom: 8), child: Text("(Tư vấn viên)")),
               TextField(
                 enabled: false,
+                minLines: 1,
+                maxLines: 50,
                 decoration: InputDecoration(
-                  hintText: topicReply.content ?? "",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    gapPadding: 0
-                  )
-                ),
+                    hintText: topicReply.content ?? "", border: OutlineInputBorder(borderRadius: BorderRadius.circular(1), gapPadding: 0)),
               ),
               SizedBox(height: 8),
-              if(topicReply.image != null)
+              if (topicReply.image != null)
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(1),
                   child: Image.network(topicReply.image),
                 )
             ],

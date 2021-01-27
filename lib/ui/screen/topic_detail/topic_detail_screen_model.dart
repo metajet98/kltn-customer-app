@@ -5,6 +5,8 @@ import 'package:customer_app/ui/screen/topic_detail/topic_detail_screen.dart';
 import 'package:injectable/injectable.dart';
 import 'package:get/get.dart';
 
+import 'bottom_sheet/reply_topic/reply_topic_bottom_sheet.dart';
+
 @injectable
 class TopicDetailScreenModel extends BaseViewModel<TopicDetailScreen> {
   int topicId;
@@ -27,5 +29,10 @@ class TopicDetailScreenModel extends BaseViewModel<TopicDetailScreen> {
     return call(() async {
       _topic.value = (await topicService.get(id: topicId)).data;
     }, background: !showLoading, toastOnError: true);
+  }
+
+  Future openReply() async {
+    var result = await Get.bottomSheet(ReplyTopicBottomSheet(topicId), isScrollControlled: true);
+    if(result != null) loadData(showLoading: true);
   }
 }

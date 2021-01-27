@@ -48,7 +48,7 @@ class TopicDetailScreen extends BaseView<TopicDetailScreenModel> {
                             children: [
                               Obx(
                                 () => Text(
-                                  viewModel.topic?.user?.fullName ?? "",
+                                  (viewModel.topic?.user?.fullName ?? "") + " (Tác giả)",
                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                                 ),
                               ),
@@ -57,10 +57,13 @@ class TopicDetailScreen extends BaseView<TopicDetailScreenModel> {
                               SizedBox(height: 8),
                               Obx(
                                 () => TextField(
+                                  maxLines: 50,
+                                  minLines: 1,
                                   enabled: false,
                                   decoration: InputDecoration(
-                                      hintText: viewModel.topic?.content ?? "",
-                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), gapPadding: 0)),
+                                      hintText:
+                                          viewModel?.topic?.content ?? "",
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(1), gapPadding: 0)),
                                 ),
                               ),
                             ],
@@ -86,7 +89,7 @@ class TopicDetailScreen extends BaseView<TopicDetailScreenModel> {
           ),
           FlatButton(
             minWidth: Get.width,
-            onPressed: () => Get.bottomSheet(ReplyTopicBottomSheet(viewModel.topicId), isScrollControlled: true),
+            onPressed: () => viewModel.openReply(),
             child: Padding(
                 padding: EdgeInsets.all(12),
                 child: Text(

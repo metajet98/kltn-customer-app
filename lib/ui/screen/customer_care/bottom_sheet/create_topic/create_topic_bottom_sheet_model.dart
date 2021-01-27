@@ -38,7 +38,7 @@ class CreateTopicBottomSheetModel extends BaseViewModel<CreateTopicBottomSheet> 
     print(params);
     call(() async {
       await topicService.createTopic(params: params);
-      Get.back();
+      Get.back(result: true);
     }, toastOnError: true, background: false);
   }
 }

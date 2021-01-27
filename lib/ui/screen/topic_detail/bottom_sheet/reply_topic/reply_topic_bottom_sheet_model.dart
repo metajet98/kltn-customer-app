@@ -42,7 +42,7 @@ class ReplyTopicBottomSheetModel extends BaseViewModel<ReplyTopicBottomSheet> {
     print(params);
     call(() async {
       await topicService.replyTopic(params: params, id: topicId);
-      Get.back();
+      Get.back(result: true);
     }, toastOnError: true, background: false);
   }
 }

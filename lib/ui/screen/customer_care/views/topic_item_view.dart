@@ -24,12 +24,21 @@ class TopicItemView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(topic.title ?? ""),
+              Text(topic.title ?? "", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
               SizedBox(height: 8),
-              Text(
-                FormatHelper.formatDateTime(topic.createdDate),
-                style: TextStyle(fontSize: 12, color: Colors.grey),
-              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    FormatHelper.formatDateTime(topic.createdDate),
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                  Text(
+                    "Lượt trả lời: ${topic.topicReply?.length ?? 0}",
+                    style: TextStyle(fontSize: 12, color: Colors.black),
+                  ),
+                ],
+              )
             ],
           ),
         ),
