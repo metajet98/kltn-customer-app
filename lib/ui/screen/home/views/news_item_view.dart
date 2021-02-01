@@ -1,4 +1,5 @@
 import 'package:customer_app/models/notification/news.dart';
+import 'package:customer_app/ui/shared/browser/custom_in_app_browser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -9,33 +10,36 @@ class NewsItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(10),
-      child: Column(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-            ),
-            child: Image.network(
-              news.thumbnail,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Flexible(
-            child: Padding(
-              padding: EdgeInsets.all(4),
-              child: Text(
-                news.title,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+    return GestureDetector(
+      onTap: () => CustomInAppBrowser.openUrl(url: news.url),
+      child: Material(
+        elevation: 5,
+        borderRadius: BorderRadius.circular(10),
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+              child: Image.network(
+                news.thumbnail,
+                fit: BoxFit.cover,
               ),
             ),
-          ),
-        ],
+            Flexible(
+              child: Padding(
+                padding: EdgeInsets.all(4),
+                child: Text(
+                  news.title,
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
