@@ -1,5 +1,6 @@
 import 'package:customer_app/helpers/format_helper.dart';
 import 'package:customer_app/models/topic/topic_reply.dart';
+import 'package:customer_app/ui/shared/preview_image/preview_image_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -42,9 +43,12 @@ class ReplyView extends StatelessWidget {
               ),
               SizedBox(height: 8),
               if (topicReply.image != null)
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(1),
-                  child: Image.network(topicReply.image),
+                GestureDetector(
+                  onTap: () => PreviewImagePage.start(imageUrl: topicReply.image),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(1),
+                    child: Image.network(topicReply.image),
+                  ),
                 )
             ],
           ),

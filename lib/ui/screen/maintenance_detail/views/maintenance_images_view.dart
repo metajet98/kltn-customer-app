@@ -1,4 +1,5 @@
 import 'package:customer_app/models/maintenance/maintenance_image.dart';
+import 'package:customer_app/ui/shared/preview_image/preview_image_page.dart';
 import 'package:flutter/widgets.dart';
 
 class MaintenanceImageView extends StatelessWidget {
@@ -16,11 +17,15 @@ class MaintenanceImageView extends StatelessWidget {
           Text("Hình ảnh", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           SizedBox(height: 8),
           Wrap(
-            runSpacing: 16, spacing: 16,
+            runSpacing: 16,
+            spacing: 16,
             children: images
-                .map((e) => Image.network(
-                      e.imageUrl,
-                      width: 100,
+                .map((e) => GestureDetector(
+                      onTap: () => PreviewImagePage.start(imageUrl: e.imageUrl),
+                      child: Image.network(
+                        e.imageUrl,
+                        width: 100,
+                      ),
                     ))
                 .toList(),
           )

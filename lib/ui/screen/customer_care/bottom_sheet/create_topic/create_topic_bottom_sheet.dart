@@ -1,6 +1,7 @@
 import 'package:customer_app/generated/assets.gen.dart';
 import 'package:customer_app/ui/base/base_view.dart';
 import 'package:customer_app/ui/screen/customer_care/bottom_sheet/create_topic/create_topic_bottom_sheet_model.dart';
+import 'package:customer_app/ui/shared/preview_image/preview_image_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -23,11 +24,10 @@ class CreateTopicBottomSheet extends BaseView<CreateTopicBottomSheetModel> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Tạo cuộc tư vấn mới",
+                      "Đặt câu hỏi",
                       style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 32),
-                    SizedBox(height: 8),
                     TextField(
                       controller: viewModel.titleInputController,
                       decoration: InputDecoration(
@@ -55,10 +55,12 @@ class CreateTopicBottomSheet extends BaseView<CreateTopicBottomSheetModel> {
                           hintStyle: TextStyle(color: Colors.grey, fontSize: 14)),
                     ),
                     SizedBox(height: 16),
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text("Đính kèm ảnh:"),
-                        SizedBox(width: 8),
+                        SizedBox(height: 8),
                         Obx(
                             () => Wrap(
                             children: _buildImageWidgets(),
@@ -121,11 +123,15 @@ class CreateTopicBottomSheet extends BaseView<CreateTopicBottomSheetModel> {
           child: SizedBox(
             width: 100,
             height: 50,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child: Image.network(
-                e,
-                fit: BoxFit.cover,
+            child: GestureDetector(
+              onLongPress: () => viewModel.removeImage(e),
+              onTap: () => PreviewImagePage.start(imageUrl: e),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Image.network(
+                  e,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),

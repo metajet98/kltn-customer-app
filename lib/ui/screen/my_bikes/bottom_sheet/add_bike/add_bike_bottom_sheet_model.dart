@@ -51,7 +51,7 @@ class AddBikeBottomSheetModel extends BaseViewModel<AddBikeBottomSheet> {
 
   void onSelectVehicleGroup(int vehicleTypeId) {
     call(() async {
-      _vehicleGroups.assignAll((await vehicleService.getVehicleGroups()).data);
+      _vehicleGroups.assignAll((await vehicleService.getVehicleGroups(vehicleCompanyId: selectedCompanyId, vehicleTypeId: vehicleTypeId)).data);
     }, background: false, toastOnError: true);
   }
 

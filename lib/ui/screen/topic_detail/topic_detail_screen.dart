@@ -4,6 +4,7 @@ import 'package:customer_app/ui/screen/topic_detail/bottom_sheet/reply_topic/rep
 import 'package:customer_app/ui/screen/topic_detail/topic_detail_screen_model.dart';
 import 'package:customer_app/ui/screen/topic_detail/views/reply_view.dart';
 import 'package:customer_app/ui/shared/list_view/easy_listview.dart';
+import 'package:customer_app/ui/shared/preview_image/preview_image_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -61,11 +62,27 @@ class TopicDetailScreen extends BaseView<TopicDetailScreenModel> {
                                   minLines: 1,
                                   enabled: false,
                                   decoration: InputDecoration(
-                                      hintText:
-                                          viewModel?.topic?.content ?? "",
+                                      hintText: viewModel?.topic?.content ?? "",
                                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(1), gapPadding: 0)),
                                 ),
                               ),
+                              Obx(() => Padding(
+                                    padding: EdgeInsets.only(top: 8),
+                                    child: Wrap(
+                                      runSpacing: 16,
+                                      spacing: 16,
+                                      children: viewModel?.topic?.topicImages
+                                              ?.map((e) => GestureDetector(
+                                                    onTap: () => PreviewImagePage.start(imageUrl: e.image),
+                                                    child: Image.network(
+                                                      e.image,
+                                                      width: 100,
+                                                    ),
+                                                  ))
+                                              ?.toList() ??
+                                          [],
+                                    ),
+                                  ))
                             ],
                           ),
                         ),

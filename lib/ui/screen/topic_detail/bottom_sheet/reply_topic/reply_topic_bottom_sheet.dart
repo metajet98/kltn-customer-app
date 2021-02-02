@@ -2,6 +2,7 @@ import 'package:customer_app/generated/assets.gen.dart';
 import 'package:customer_app/ui/base/base_view.dart';
 import 'package:customer_app/ui/screen/customer_care/bottom_sheet/create_topic/create_topic_bottom_sheet_model.dart';
 import 'package:customer_app/ui/screen/topic_detail/bottom_sheet/reply_topic/reply_topic_bottom_sheet_model.dart';
+import 'package:customer_app/ui/shared/preview_image/preview_image_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -111,11 +112,15 @@ class ReplyTopicBottomSheet extends BaseView<ReplyTopicBottomSheetModel> {
         child: SizedBox(
           width: 100,
           height: 50,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: Image.network(
-              viewModel.image,
-              fit: BoxFit.cover,
+          child: GestureDetector(
+            onLongPress: () => viewModel.removeImage(),
+            onTap: () => PreviewImagePage.start(imageUrl: viewModel.image),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: Image.network(
+                viewModel.image,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
