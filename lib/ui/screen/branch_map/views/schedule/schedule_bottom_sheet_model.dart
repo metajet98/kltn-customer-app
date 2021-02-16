@@ -30,7 +30,7 @@ class ScheduleBottomSheetModel extends BaseViewModel {
   Future loadSchedule({bool showLoading = true}) async {
     return call(() async {
       var userId = locator<UserStorage>().get();
-      var calenderFetchedList = (await calenderService.getCalender(userId: userId)).data;
+      var calenderFetchedList = (await calenderService.getCalender(userId: userId, branchId: branch.id)).data;
       if(calenderFetchedList.isEmpty) {
         Fluttertoast.showToast(msg: "Bạn chưa có lịch hẹn nào cả!");
         Get.back();
