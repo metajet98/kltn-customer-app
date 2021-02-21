@@ -2,6 +2,7 @@ import 'package:customer_app/helpers/format_helper.dart';
 import 'package:customer_app/models/calender/calender.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class ScheduleItemView extends StatelessWidget {
   final Calender calender;
@@ -38,6 +39,15 @@ class ScheduleItemView extends StatelessWidget {
                     height: 4,
                   ),
                   Text(FormatHelper.formatDateTime(calender?.time) ?? ""),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  getStatusText(calender?.status),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  if(!GetUtils.isNullOrBlank(calender?.review))
+                    Text("Lý do: ${calender.review}")
                 ],
               ),
             ),
@@ -54,5 +64,11 @@ class ScheduleItemView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Text getStatusText(int status) {
+    if(status == 1) return Text("Đã duyệt", style: TextStyle(color: Colors.green));
+    else if(status == 2) return Text("Bị từ chối", style: TextStyle(color: Colors.red));
+    else if(status == null) return Text("Đang chờ duyệt");
   }
 }

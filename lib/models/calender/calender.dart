@@ -23,11 +23,16 @@ class Calender {
   @JsonKey(name: "branch")
   Branch branch;
 
+  @JsonKey(name: "status")
+  int status;
+
+  @JsonKey(name: "review")
+  String review;
+
   @JsonKey(name: "createdDate")
   DateTime createdDate;
 
-
-  Calender(this.id, this.userId, this.notes, this.time, this.branchId, this.branch, this.createdDate);
+  Calender(this.id, this.userId, this.notes, this.time, this.branchId, this.branch, this.createdDate, this.review, this.status);
 
   factory Calender.fromJson(Map<String, dynamic> json) => _$CalenderFromJson(json);
 
